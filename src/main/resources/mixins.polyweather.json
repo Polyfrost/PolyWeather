@@ -1,0 +1,13 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.7",
+  "package": "cc.polyfrost.polyweather.mixin",
+  "refmap": "mixins.polyweather.refmap.json",
+  "verbose": true,
+  "client": [
+    "EntityRendererMixin",
+    "WorldChunkManagerMixin",
+    "WorldInfoMixin",
+    "WorldMixin"
+  ]
+}

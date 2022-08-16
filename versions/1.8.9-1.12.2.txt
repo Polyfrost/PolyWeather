@@ -1,0 +1,1 @@
+net.minecraft.world.biome.WorldChunkManager net.minecraft.world.biome.BiomeProvider

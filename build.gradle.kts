@@ -110,14 +110,6 @@ tasks.processResources {
     }
 }
 
-afterEvaluate {
-    if (rootProject.file("LICENSE-TEMPLATE").exists()) {
-        logger.error("-------------------------------------------------------")
-        logger.error("PLEASE REPLACE THE `LICENSE-TEMPLATE` FILE WITH YOUR OWN LICENSE")
-        logger.error("-------------------------------------------------------")
-    }
-}
-
 tasks {
     withType(Jar::class.java) {
         if (project.platform.isFabric) {
