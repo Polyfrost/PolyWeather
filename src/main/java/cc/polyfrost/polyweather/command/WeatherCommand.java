@@ -7,9 +7,8 @@ import cc.polyfrost.polyweather.config.WeatherConfig;
 
 @Command(value = PolyWeather.MODID, description = "Access the " + PolyWeather.NAME + " GUI.")
 public class WeatherCommand {
-
     @Main
-    private static void main() {
+    private void main() {
         WeatherConfig.getInstance().openGui();
     }
 }

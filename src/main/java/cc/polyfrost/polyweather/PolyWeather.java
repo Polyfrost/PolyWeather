@@ -14,7 +14,7 @@ public class PolyWeather {
 
     @net.minecraftforge.fml.common.Mod.EventHandler
     public void onFMLInitialization(net.minecraftforge.fml.common.event.FMLInitializationEvent event) {
-        CommandManager.INSTANCE.registerCommand(WeatherCommand.class);
+        CommandManager.INSTANCE.registerCommand(new WeatherCommand());
         WeatherConfig.getInstance();
         IrlWeatherHandler.fetchData();
     }
