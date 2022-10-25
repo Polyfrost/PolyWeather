@@ -29,9 +29,11 @@ blossom {
 
 version = mod_version
 group = "cc.polyfrost"
+
 base {
-    archivesName.set("$mod_name ($platform)")
+    archivesName.set("$mod_name-$platform")
 }
+
 loom {
     noServerRunConfigs()
     if (project.platform.isLegacyForge) {
