@@ -5,7 +5,7 @@ import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 import cc.polyfrost.polyweather.config.WeatherConfig;
 
-@Command(value = PolyWeather.MODID, description = "Access the " + PolyWeather.NAME + " GUI.")
+@Command(value = PolyWeather.MODID, description = "Access the " + PolyWeather.NAME + " GUI.", aliases = "weatherchanger")
 public class WeatherCommand {
     @Main
     private void main() {
