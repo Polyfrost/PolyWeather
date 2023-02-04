@@ -46,13 +46,13 @@ public class WeatherConfig extends Config {
     }
 
     public WeatherConfig() {
-        super(new Mod("Weather Changer", ModType.UTIL_QOL), PolyWeather.MODID + ".json", false);
+        super(new Mod("Weather Changer", ModType.UTIL_QOL, "/polyweather_dark.svg"), PolyWeather.MODID + ".json", false);
         initialize();
-        addDependency("rainStrength", () -> getWeatherType() != WeatherType.CLEAR);
-        addDependency("thunderStrength", () -> getWeatherType() == WeatherType.STORM);
-        addDependency("rainStrength", () -> !irlWeather);
-        addDependency("thunderStrength", () -> !irlWeather);
-        addDependency("weather", () -> !irlWeather);
+        addDependency("rainStrength", "Weather Clear", () -> getWeatherType() != WeatherType.CLEAR);
+        addDependency("thunderStrength", "Weather Storm", () -> getWeatherType() == WeatherType.STORM);
+        addDependency("rainStrength", "Use IRL Weather", () -> !irlWeather);
+        addDependency("thunderStrength", "Use IRL Weather", () -> !irlWeather);
+        addDependency("weather", "Use IRL Weather", () -> !irlWeather);
         addListener("irlWeather", IrlWeatherHandler::fetchData);
     }
 }

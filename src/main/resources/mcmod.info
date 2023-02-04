@@ -5,10 +5,10 @@
     "description": "",
     "version": "${version}",
     "mcversion": "1.8.9",
-    "url": "",
+    "url": "https://github.com/Polyfrost/PolyWeather",
     "updateUrl": "",
     "authorList": [
-      "Your Name"
+      "Polyfrost"
     ],
     "credits": "",
     "logoFile": "",

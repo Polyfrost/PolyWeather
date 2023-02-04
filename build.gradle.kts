@@ -47,6 +47,7 @@ loom {
             mixinConfig("mixins.${mod_id}.json")
         }
     }
+    @Suppress("UnstableApiUsage")
     mixin.defaultRefmapName.set("mixins.${mod_id}.refmap.json")
 }
 
@@ -65,7 +66,7 @@ repositories {
 }
 
 dependencies {
-    modCompileOnly("cc.polyfrost:oneconfig-$platform:0.1.0-alpha108")
+    modCompileOnly("cc.polyfrost:oneconfig-$platform:0.2.0-alpha171")
 
     if (platform.isLegacyForge) {
         compileOnly("org.spongepowered:mixin:0.7.11-SNAPSHOT")
