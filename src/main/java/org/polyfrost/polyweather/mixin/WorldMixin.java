@@ -1,7 +1,7 @@
-package cc.polyfrost.polyweather.mixin;
+package org.polyfrost.polyweather.mixin;
 
-import cc.polyfrost.polyweather.PolyWeather;
-import cc.polyfrost.polyweather.config.WeatherConfig;
+import org.polyfrost.polyweather.PolyWeather;
+import org.polyfrost.polyweather.config.WeatherConfig;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

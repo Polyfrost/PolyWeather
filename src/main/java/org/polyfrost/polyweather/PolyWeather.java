@@ -1,10 +1,10 @@
-package cc.polyfrost.polyweather;
+package org.polyfrost.polyweather;
 
-import cc.polyfrost.polyweather.command.WeatherCommand;
-import cc.polyfrost.polyweather.config.WeatherConfig;
+import org.polyfrost.polyweather.command.WeatherCommand;
+import org.polyfrost.polyweather.config.WeatherConfig;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
-import cc.polyfrost.polyweather.util.IrlWeatherHandler;
-import cc.polyfrost.polyweather.util.WeatherType;
+import org.polyfrost.polyweather.util.IrlWeatherHandler;
+import org.polyfrost.polyweather.util.WeatherType;
 
 @net.minecraftforge.fml.common.Mod(modid = PolyWeather.MODID, name = PolyWeather.NAME, version = PolyWeather.VERSION)
 public class PolyWeather {

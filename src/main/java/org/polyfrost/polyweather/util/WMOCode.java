@@ -1,4 +1,4 @@
-package cc.polyfrost.polyweather.util;
+package org.polyfrost.polyweather.util;
 
 /**
  * <a href="https://open-meteo.com/en/docs">code docs</a>

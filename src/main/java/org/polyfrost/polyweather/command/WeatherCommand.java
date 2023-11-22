@@ -1,9 +1,9 @@
-package cc.polyfrost.polyweather.command;
+package org.polyfrost.polyweather.command;
 
-import cc.polyfrost.polyweather.PolyWeather;
+import org.polyfrost.polyweather.PolyWeather;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
-import cc.polyfrost.polyweather.config.WeatherConfig;
+import org.polyfrost.polyweather.config.WeatherConfig;
 
 @Command(value = PolyWeather.MODID, description = "Access the " + PolyWeather.NAME + " GUI.", aliases = "weatherchanger")
 public class WeatherCommand {

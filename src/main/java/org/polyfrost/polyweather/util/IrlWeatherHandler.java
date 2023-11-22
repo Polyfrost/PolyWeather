@@ -1,14 +1,13 @@
-package cc.polyfrost.polyweather.util;
+package org.polyfrost.polyweather.util;
 
 import cc.polyfrost.oneconfig.utils.Multithreading;
 import cc.polyfrost.oneconfig.utils.NetworkUtils;
-import cc.polyfrost.polyweather.config.WeatherConfig;
+import org.polyfrost.polyweather.config.WeatherConfig;
 import com.google.gson.JsonObject;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashMap;

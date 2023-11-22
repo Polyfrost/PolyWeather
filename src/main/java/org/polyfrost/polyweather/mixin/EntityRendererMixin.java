@@ -1,7 +1,7 @@
-package cc.polyfrost.polyweather.mixin;
+package org.polyfrost.polyweather.mixin;
 
-import cc.polyfrost.polyweather.PolyWeather;
-import cc.polyfrost.polyweather.config.WeatherConfig;
+import org.polyfrost.polyweather.PolyWeather;
+import org.polyfrost.polyweather.config.WeatherConfig;
 import net.minecraft.client.renderer.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

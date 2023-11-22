@@ -1,4 +1,4 @@
-package cc.polyfrost.polyweather.util;
+package org.polyfrost.polyweather.util;
 
 public enum WeatherType {
     CLEAR(0),

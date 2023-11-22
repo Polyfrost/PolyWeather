@@ -1,4 +1,4 @@
-package cc.polyfrost.polyweather.config;
+package org.polyfrost.polyweather.config;
 
 import cc.polyfrost.oneconfig.config.Config;
 import cc.polyfrost.oneconfig.config.annotations.Checkbox;
@@ -7,9 +7,9 @@ import cc.polyfrost.oneconfig.config.annotations.Exclude;
 import cc.polyfrost.oneconfig.config.annotations.Slider;
 import cc.polyfrost.oneconfig.config.data.Mod;
 import cc.polyfrost.oneconfig.config.data.ModType;
-import cc.polyfrost.polyweather.PolyWeather;
-import cc.polyfrost.polyweather.util.IrlWeatherHandler;
-import cc.polyfrost.polyweather.util.WeatherType;
+import org.polyfrost.polyweather.PolyWeather;
+import org.polyfrost.polyweather.util.IrlWeatherHandler;
+import org.polyfrost.polyweather.util.WeatherType;
 
 public class WeatherConfig extends Config {
     @Exclude
