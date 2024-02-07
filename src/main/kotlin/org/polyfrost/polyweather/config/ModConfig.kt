@@ -7,7 +7,7 @@ import org.polyfrost.polyweather.PolyWeather
 import org.polyfrost.polyweather.util.WeatherType
 
 
-object ModConfig : Config(Mod(PolyWeather.NAME, ModType.UTIL_QOL), "${PolyWeather.MODID}.json") {
+object ModConfig : Config(Mod(PolyWeather.NAME, ModType.UTIL_QOL, "/polyweather_dark.svg"), "${PolyWeather.MODID}.json") {
 
     @Dropdown(
         name = "Weather",
