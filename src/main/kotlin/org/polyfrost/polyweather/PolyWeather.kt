@@ -1,46 +1,60 @@
-package org.polyfrost.polyweather;
+package org.polyfrost.polyweather
 
-import org.polyfrost.polyweather.command.WeatherCommand;
-import org.polyfrost.polyweather.config.WeatherConfig;
-import cc.polyfrost.oneconfig.utils.commands.CommandManager;
-import org.polyfrost.polyweather.util.IrlWeatherHandler;
-import org.polyfrost.polyweather.util.WeatherType;
+import cc.polyfrost.oneconfig.utils.commands.CommandManager
+import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.common.event.FMLInitializationEvent
+import org.polyfrost.polyweather.command.WeatherCommand
+import org.polyfrost.polyweather.config.ModConfig
+import org.polyfrost.polyweather.util.*
 
-@net.minecraftforge.fml.common.Mod(modid = PolyWeather.MODID, name = PolyWeather.NAME, version = PolyWeather.VERSION)
-public class PolyWeather {
-    public static final String MODID = "@ID@";
-    public static final String NAME = "@NAME@";
-    public static final String VERSION = "@VER@";
+@Mod(modid = PolyWeather.MODID, name = PolyWeather.NAME, version = PolyWeather.VERSION, modLanguageAdapter = "cc.polyfrost.oneconfig.utils.KotlinLanguageAdapter")
+object PolyWeather {
 
-    @net.minecraftforge.fml.common.Mod.EventHandler
-    public void onFMLInitialization(net.minecraftforge.fml.common.event.FMLInitializationEvent event) {
-        CommandManager.INSTANCE.registerCommand(new WeatherCommand());
-        WeatherConfig.getInstance();
-        IrlWeatherHandler.fetchData();
+    @Mod.EventHandler
+    fun onFMLInitialization(event: FMLInitializationEvent?) {
+        CommandManager.INSTANCE.registerCommand(WeatherCommand)
+        ModConfig
+        IrlWeatherHandler.fetchData()
     }
 
-    public static boolean isRaining() {
-        if (WeatherConfig.irlWeather) return IrlWeatherHandler.isRaining();
-        return WeatherConfig.getWeatherType() != WeatherType.CLEAR;
-    }
+    const val MODID: String = "@ID@"
+    const val NAME: String = "@NAME@"
+    const val VERSION: String = "@VER@"
 
-    public static boolean isThundering() {
-        if (WeatherConfig.irlWeather) return IrlWeatherHandler.isThundering();
-        return WeatherConfig.getWeatherType() == WeatherType.STORM;
-    }
+    val isRaining: Boolean
+        get() {
+            if (ModConfig.irlWeather) return IrlWeatherHandler.isRaining
+            return ModConfig.getWeatherType() != WeatherType.CLEAR
+        }
 
-    public static boolean isSnowing() {
-        if (WeatherConfig.irlWeather) return IrlWeatherHandler.isSnowing();
-        return WeatherConfig.getWeatherType() == WeatherType.SNOW;
-    }
+    val isThundering: Boolean
+        get() {
+            if (ModConfig.irlWeather) return IrlWeatherHandler.isThundering
+            return ModConfig.getWeatherType() == WeatherType.STORM
+        }
 
-    public static float getRainStrength() {
-        if (WeatherConfig.irlWeather) return IrlWeatherHandler.getRainStrength();
-        return WeatherConfig.rainStrength;
-    }
+    val isSnowing: Boolean
+        get() {
+            if (ModConfig.irlWeather) return IrlWeatherHandler.isSnowing
+            return ModConfig.getWeatherType() == WeatherType.SNOW
+        }
 
-    public static float getThunderStrength() {
-        if (WeatherConfig.irlWeather) return IrlWeatherHandler.getThunderStrength();
-        return WeatherConfig.thunderStrength;
-    }
+    val rainStrength: Float
+        get() {
+            if (ModConfig.irlWeather) return IrlWeatherHandler.rainStrength
+            return ModConfig.rainStrength
+        }
+
+    val snowStrength: Float
+        get() {
+            if (ModConfig.irlWeather) return IrlWeatherHandler.rainStrength
+            return ModConfig.snowStrength
+        }
+
+    val thunderStrength: Float
+        get() {
+            if (ModConfig.irlWeather) return IrlWeatherHandler.thunderStrength
+            return ModConfig.thunderStrength
+        }
+
 }

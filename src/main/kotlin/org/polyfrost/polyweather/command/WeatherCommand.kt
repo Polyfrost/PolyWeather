@@ -1,14 +1,13 @@
-package org.polyfrost.polyweather.command;
+package org.polyfrost.polyweather.command
 
-import org.polyfrost.polyweather.PolyWeather;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Command;
-import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
-import org.polyfrost.polyweather.config.WeatherConfig;
+import cc.polyfrost.oneconfig.utils.commands.annotations.*
+import org.polyfrost.polyweather.PolyWeather
+import org.polyfrost.polyweather.config.ModConfig
 
-@Command(value = PolyWeather.MODID, description = "Access the " + PolyWeather.NAME + " GUI.", aliases = "weatherchanger")
-public class WeatherCommand {
+@Command(value = PolyWeather.MODID, description = "Access the " + PolyWeather.NAME + " GUI.", aliases = ["weatherchanger"])
+object WeatherCommand {
     @Main
-    private void main() {
-        WeatherConfig.getInstance().openGui();
+    private fun main() {
+        ModConfig.openGui()
     }
 }

@@ -1,21 +1,17 @@
-package org.polyfrost.polyweather.util;
+package org.polyfrost.polyweather.util
 
-public enum WeatherType {
+enum class WeatherType(private val id: Int) {
     CLEAR(0),
     RAIN(1),
     STORM(2),
     SNOW(3);
 
-    private final int id;
-
-    WeatherType(int id) {
-        this.id = id;
-    }
-
-    public static WeatherType byId(int id) {
-        for (WeatherType type : values()) {
-            if (id == type.id) return type;
+    companion object {
+        fun byId(id: Int): WeatherType {
+            for (type in values()) {
+                if (id == type.id) return type
+            }
+            return CLEAR
         }
-        return CLEAR;
     }
 }
