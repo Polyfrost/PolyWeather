@@ -34,9 +34,10 @@ enum class WMOCode(val code: Int, val rainStrength: Float = 0f, val snow: Boolea
 
     companion object {
         fun fromCode(code: Int): WMOCode {
-            for (WMOCode in entries) {
-                if (code == WMOCode.code) return WMOCode
+            for (wmoCode in values()) {
+                if (code == wmoCode.code) return wmoCode
             }
+
             return CLEAR
         }
     }
