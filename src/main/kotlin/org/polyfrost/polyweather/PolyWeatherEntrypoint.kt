@@ -35,7 +35,6 @@ import org.polyfrost.polyweather.client.PolyWeatherClient
 @Mod(modid = PolyWeatherConstants.ID, version = PolyWeatherConstants.VERSION)
 //#endif
 //#endif
-
 class PolyWeatherEntrypoint
     //#if FABRIC
     //$$ : ClientModInitializer
@@ -53,7 +52,7 @@ class PolyWeatherEntrypoint
     //#endif
 
     //#if FABRIC
-    //$$ @Override
+    //$$ override
     //#elseif FORGE && MC <= 1.12.2
     @EventHandler
     //#endif

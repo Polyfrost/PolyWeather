@@ -1,6 +1,5 @@
 package org.polyfrost.polyweather.mixin;
 
-import net.minecraftforge.fml.relauncher.*;
 import org.polyfrost.polyweather.client.PolyWeatherClient;
 import org.polyfrost.polyweather.client.PolyWeatherConfig;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.world.biome.WorldChunkManager;
 //#endif
 
-@SideOnly(Side.CLIENT)
 //#if MC >= 1.12
 //$$ @Mixin(BiomeProvider.class)
 //#else
