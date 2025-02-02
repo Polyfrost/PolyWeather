@@ -43,7 +43,7 @@ class PolyWeatherEntrypoint
 
     //#if FORGE && MC >= 1.16.5
     //$$ init {
-    //$$     setupForgeEvents(FMLJavaModLoadingContext.get().getModEventBus())
+    //$$     setupForgeEvents(FMLJavaModLoadingContext.get().modEventBus)
     //$$ }
     //#elseif NEOFORGE
     //$$ constructor(modEventBus: IEventBus) {
@@ -59,7 +59,7 @@ class PolyWeatherEntrypoint
     fun onInitializeClient(
         //#if FORGE-LIKE
         //#if MC >= 1.16.5
-        //$$ FMLClientSetupEvent event
+        //$$ event: FMLClientSetupEvent
         //#else
         event: FMLInitializationEvent
         //#endif
