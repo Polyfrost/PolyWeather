@@ -32,7 +32,7 @@ object PolyWeatherClient {
 
     fun initialize() {
         PolyWeatherConfig.preload()
-        CommandManager.registerCommand(PolyWeatherCommand)
+        CommandManager.register(PolyWeatherCommand)
         RealWeatherHandler.initialize()
     }
 
