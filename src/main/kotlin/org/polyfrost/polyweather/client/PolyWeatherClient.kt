@@ -1,6 +1,8 @@
 package org.polyfrost.polyweather.client
 
 import org.polyfrost.oneconfig.api.commands.v1.CommandManager
+import org.polyfrost.oneconfig.utils.v1.dsl.openUI
+import org.polyfrost.polyweather.PolyWeatherConstants
 import org.polyfrost.polyweather.client.realtime.RealWeatherHandler
 import org.polyfrost.polyweather.util.WeatherType
 
@@ -32,8 +34,14 @@ object PolyWeatherClient {
 
     fun initialize() {
         PolyWeatherConfig.preload()
-        CommandManager.register(PolyWeatherCommand)
         RealWeatherHandler.initialize()
+
+        with(CommandManager.literal(PolyWeatherConstants.ID)) {
+            executes { ctx ->
+                PolyWeatherConfig.openUI()
+                0
+            }
+        }
     }
 
 }
