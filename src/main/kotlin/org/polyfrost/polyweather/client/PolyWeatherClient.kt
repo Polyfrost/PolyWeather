@@ -36,12 +36,12 @@ object PolyWeatherClient {
         PolyWeatherConfig.preload()
         RealWeatherHandler.initialize()
 
-        with(CommandManager.literal(PolyWeatherConstants.ID)) {
+        CommandManager.register(with(CommandManager.literal(PolyWeatherConstants.ID)) {
             executes { ctx ->
                 PolyWeatherConfig.openUI()
                 0
             }
-        }
+        })
     }
 
 }
