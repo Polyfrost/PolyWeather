@@ -5,7 +5,7 @@
   "refmap": "mixins.polyweather.refmap.json",
   "verbose": true,
   "client": [
-      "Mixin_EntityRenderer_ForceRainAndSnowParticles",
+    "Mixin_EntityRenderer_ForceRainAndSnowParticles",
     "Mixin_WorldChunkManager_FixLowTempsWhenSnowing",
     "Mixin_WorldInfo_ForceRainAndThunderChecks",
     "Mixin_World_FixRainAndThunderStrength"

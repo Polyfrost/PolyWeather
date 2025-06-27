@@ -35,15 +35,16 @@ import org.polyfrost.polyweather.client.PolyWeatherClient
 @Mod(modid = PolyWeatherConstants.ID, version = PolyWeatherConstants.VERSION)
 //#endif
 //#endif
+
 class PolyWeatherEntrypoint
-    //#if FABRIC
-    //$$ : ClientModInitializer
-    //#endif
+//#if FABRIC
+//$$ : ClientModInitializer
+//#endif
 {
 
     //#if FORGE && MC >= 1.16.5
     //$$ init {
-    //$$     setupForgeEvents(FMLJavaModLoadingContext.get().modEventBus)
+    //$$     setupForgeEvents(FMLJavaModLoadingContext.get().getModEventBus())
     //$$ }
     //#elseif NEOFORGE
     //$$ constructor(modEventBus: IEventBus) {
