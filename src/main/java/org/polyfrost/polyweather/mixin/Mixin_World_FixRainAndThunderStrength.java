@@ -2,8 +2,12 @@ package org.polyfrost.polyweather.mixin;
 
 //#if MC > 1.12.2 && MC < 1.21.4
 //$$ import net.minecraft.client.MinecraftClient;
-//#else
+//#endif
+//#if MC <= 1.12.2
 import net.minecraft.world.World;
+//#else
+//$$ import net.minecraft.world.World;
+//#endif
 import org.polyfrost.polyweather.client.PolyWeatherClient;
 import org.polyfrost.polyweather.client.PolyWeatherConfig;
 import org.spongepowered.asm.mixin.Mixin;
