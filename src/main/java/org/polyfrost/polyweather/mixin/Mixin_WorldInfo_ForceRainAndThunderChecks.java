@@ -1,5 +1,8 @@
 package org.polyfrost.polyweather.mixin;
 
+//#if MC >= 1.21.4
+//$$ import net.minecraft.client.MinecraftClient;
+//#endif
 import net.minecraft.world.storage.WorldInfo;
 import org.polyfrost.polyweather.client.PolyWeatherClient;
 import org.polyfrost.polyweather.client.PolyWeatherConfig;
@@ -8,9 +11,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+//#if MC >= 1.21.4
+//$$ @Mixin(MinecraftClient.class)
+//#else
 @Mixin(WorldInfo.class)
+//#endif
 public class Mixin_WorldInfo_ForceRainAndThunderChecks {
-
+    //#if MC <= 1.21.2
     @Inject(method = "isRaining", at = @At("HEAD"), cancellable = true)
     private void isRaining(CallbackInfoReturnable<Boolean> cir) {
         if (PolyWeatherConfig.INSTANCE.enabled) {
@@ -24,4 +31,5 @@ public class Mixin_WorldInfo_ForceRainAndThunderChecks {
             cir.setReturnValue(PolyWeatherClient.isThundering());
         }
     }
+    //#endif
 }

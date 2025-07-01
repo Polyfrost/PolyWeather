@@ -31,7 +31,7 @@ object PolyWeatherConfig : Config("${PolyWeatherConstants.ID}.json", "/polyweath
         min = 0f, max = 1f,
         category = "Weather"
     )
-    var rainStrength = 1f
+    var rainStrength = 0.5f // TODO: 1f
 
     @Slider(
         title = "Snow intensity",

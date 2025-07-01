@@ -1,5 +1,8 @@
 package org.polyfrost.polyweather.mixin;
 
+//#if MC > 1.12.2 && MC < 1.21.4
+//$$ import net.minecraft.client.MinecraftClient;
+//#else
 import net.minecraft.world.World;
 import org.polyfrost.polyweather.client.PolyWeatherClient;
 import org.polyfrost.polyweather.client.PolyWeatherConfig;
@@ -8,9 +11,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+//#if MC <= 1.12.2 || MC >= 1.21.4
 @Mixin(World.class)
+//#else
+//$$ @Mixin(MinecraftClient.class)
+//#endif
+// TODO: FINISH
 public class Mixin_World_FixRainAndThunderStrength {
-
+    //#if MC <= 1.12.2 || MC >= 1.21.4
     @Inject(method = "getRainStrength", at = @At("HEAD"), cancellable = true)
     private void getRainStrength(float delta, CallbackInfoReturnable<Float> cir) {
         if (PolyWeatherConfig.INSTANCE.enabled)
@@ -22,4 +30,5 @@ public class Mixin_World_FixRainAndThunderStrength {
         if (PolyWeatherConfig.INSTANCE.enabled)
             cir.setReturnValue(PolyWeatherClient.isThundering() ? PolyWeatherClient.getThunderStrength() : 0f);
     }
+    //#endif
 }

@@ -6,8 +6,9 @@
   "verbose": true,
   "client": [
     "Mixin_EntityRenderer_ForceRainAndSnowParticles",
+    "Mixin_World_FixRainAndThunderStrength",
     "Mixin_WorldChunkManager_FixLowTempsWhenSnowing",
     "Mixin_WorldInfo_ForceRainAndThunderChecks",
-    "Mixin_World_FixRainAndThunderStrength"
+    "WeatherRenderingMixin"
   ]
 }
