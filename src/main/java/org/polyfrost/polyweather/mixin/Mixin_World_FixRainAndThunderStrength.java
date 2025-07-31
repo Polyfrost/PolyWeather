@@ -20,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 //#else
 //$$ @Mixin(MinecraftClient.class)
 //#endif
-// TODO: FINISH
 public class Mixin_World_FixRainAndThunderStrength {
     //#if MC <= 1.12.2 || MC >= 1.21.4
     @Inject(method = "getRainStrength", at = @At("HEAD"), cancellable = true)
