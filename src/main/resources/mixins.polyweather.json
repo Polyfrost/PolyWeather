@@ -1,13 +1,13 @@
 {
-  "compatibilityLevel": "JAVA_8",
-  "minVersion": "0.7",
-  "package": "org.polyfrost.polyweather.mixin",
-  "refmap": "mixins.polyweather.refmap.json",
-  "verbose": true,
-  "client": [
-      "Mixin_EntityRenderer_ForceRainAndSnowParticles",
-    "Mixin_WorldChunkManager_FixLowTempsWhenSnowing",
-    "Mixin_WorldInfo_ForceRainAndThunderChecks",
-    "Mixin_World_FixRainAndThunderStrength"
-  ]
+    "compatibilityLevel": "JAVA_8",
+    "minVersion": "0.7",
+    "package": "org.polyfrost.polyweather.mixin",
+    "refmap": "mixins.polyweather.refmap.json",
+    "verbose": true,
+    "client": [
+        "Mixin_FixLowTempsWhenSnowing",
+        "Mixin_FixRainAndThunderStrength",
+        "Mixin_ForceRainAndSnowParticles",
+        "Mixin_ForceRainAndThunderChecks"
+    ]
 }

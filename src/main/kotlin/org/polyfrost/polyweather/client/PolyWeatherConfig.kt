@@ -8,7 +8,7 @@ import org.polyfrost.oneconfig.api.config.v1.annotations.Slider
 import org.polyfrost.polyweather.PolyWeatherConstants
 import org.polyfrost.polyweather.util.WeatherType
 
-object PolyWeatherConfig : Config("${PolyWeatherConstants.ID}.json", "/polyweather_dark.svg", PolyWeatherConstants.NAME, Category.QOL) {
+object PolyWeatherConfig : Config("${PolyWeatherConstants.ID}.json", "/assets/polyweather/polyweather_dark.svg", PolyWeatherConstants.NAME, Category.QOL) {
 
     @Dropdown(
         title = "Weather",

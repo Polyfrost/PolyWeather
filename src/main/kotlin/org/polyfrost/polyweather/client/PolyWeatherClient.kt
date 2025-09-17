@@ -7,7 +7,6 @@ import org.polyfrost.polyweather.client.realtime.RealWeatherHandler
 import org.polyfrost.polyweather.util.WeatherType
 
 object PolyWeatherClient {
-
     @JvmStatic
     val isRaining: Boolean
         get() = if (PolyWeatherConfig.irlWeather) RealWeatherHandler.isRaining else PolyWeatherConfig.weatherType != WeatherType.CLEAR
@@ -43,5 +42,4 @@ object PolyWeatherClient {
             }
         })
     }
-
 }

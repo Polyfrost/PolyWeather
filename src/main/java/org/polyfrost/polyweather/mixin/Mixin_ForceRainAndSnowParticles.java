@@ -9,13 +9,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(EntityRenderer.class)
-public class Mixin_EntityRenderer_ForceRainAndSnowParticles {
-
+public class Mixin_ForceRainAndSnowParticles {
     @Inject(method = "addRainParticles", at = @At("HEAD"), cancellable = true)
     private void addRainParticles(CallbackInfo ci) {
         if (PolyWeatherConfig.INSTANCE.enabled && (!PolyWeatherClient.isRaining() || PolyWeatherClient.isSnowing())) {
             ci.cancel();
         }
     }
-
 }

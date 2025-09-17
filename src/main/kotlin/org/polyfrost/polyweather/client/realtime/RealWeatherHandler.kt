@@ -15,7 +15,6 @@ import java.time.Instant
 import java.util.Calendar
 
 object RealWeatherHandler {
-
     private val logger = LogManager.getLogger(RealWeatherHandler::class.java)
 
     private val data = mutableMapOf<Instant, WMOCode>()
@@ -155,5 +154,4 @@ object RealWeatherHandler {
 
         return weatherCodes
     }
-
 }
