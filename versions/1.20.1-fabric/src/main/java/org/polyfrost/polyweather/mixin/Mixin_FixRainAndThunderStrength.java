@@ -1,8 +1,9 @@
 package org.polyfrost.polyweather.mixin;
 
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
@@ -15,8 +16,8 @@ import java.util.function.Supplier;
 
 @Mixin(ClientWorld.class)
 public abstract class Mixin_FixRainAndThunderStrength extends World {
-    protected Mixin_FixRainAndThunderStrength(MutableWorldProperties mutableWorldProperties, RegistryKey<World> registryKey, RegistryEntry<DimensionType> registryEntry, Supplier<Profiler> supplier, boolean bl, boolean bl2, long l, int i) {
-        super(mutableWorldProperties, registryKey, registryEntry, supplier, bl, bl2, l, i);
+    protected Mixin_FixRainAndThunderStrength(MutableWorldProperties arg, RegistryKey<World> arg2, DynamicRegistryManager arg3, RegistryEntry<DimensionType> arg4, Supplier<Profiler> supplier, boolean bl, boolean bl2, long l, int i) {
+        super(arg, arg2, arg3, arg4, supplier, bl, bl2, l, i);
     }
 
     @Override

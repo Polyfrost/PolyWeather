@@ -2,8 +2,8 @@ package org.polyfrost.polyweather.mixin;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.WritableLevelData;
@@ -11,12 +11,10 @@ import org.polyfrost.polyweather.client.PolyWeatherClient;
 import org.polyfrost.polyweather.client.PolyWeatherConfig;
 import org.spongepowered.asm.mixin.Mixin;
 
-import java.util.function.Supplier;
-
 @Mixin(ClientLevel.class)
 public abstract class Mixin_FixRainAndThunderStrength extends Level {
-    protected Mixin_FixRainAndThunderStrength(WritableLevelData arg, ResourceKey<Level> arg2, Holder<DimensionType> arg3, Supplier<ProfilerFiller> supplier, boolean bl, boolean bl2, long l) {
-        super(arg, arg2, arg3, supplier, bl, bl2, l);
+    protected Mixin_FixRainAndThunderStrength(WritableLevelData mutableWorldProperties, ResourceKey<Level> registryKey, RegistryAccess dynamicRegistryManager, Holder<DimensionType> registryEntry, boolean bl, boolean bl2, long l, int i) {
+        super(mutableWorldProperties, registryKey, dynamicRegistryManager, registryEntry, bl, bl2, l, i);
     }
 
     @Override
