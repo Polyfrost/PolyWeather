@@ -1,23 +1,13 @@
 package org.polyfrost.polyweather.client
 
-import dev.deftu.omnicore.api.client.world
 import dev.deftu.omnicore.api.math.OmniMath
 import org.polyfrost.polyweather.client.realtime.RealWeatherHandler
 import org.polyfrost.polyweather.util.WeatherType
 
 object ClientWeatherManager {
-    private val weatherStorage: WeatherStorage?
-        get() {
-            val world = world ?: return null
-            return world as? WeatherStorage
-                ?: throw IllegalStateException("World does not implement WeatherStorage")
-        }
-
     @JvmStatic val isRainy: Boolean get() = if (PolyWeatherConfig.isIrlWeather) RealWeatherHandler.isRainy else PolyWeatherConfig.weatherType != WeatherType.CLEAR
     @JvmStatic val isStormy: Boolean get() = if (PolyWeatherConfig.isIrlWeather) RealWeatherHandler.isStormy else PolyWeatherConfig.weatherType == WeatherType.STORM
     @JvmStatic val isSnowy: Boolean get() = if (PolyWeatherConfig.isIrlWeather) RealWeatherHandler.isSnowy else PolyWeatherConfig.weatherType == WeatherType.SNOW
-
-    @JvmStatic val isActuallyRaining: Boolean get() = weatherStorage?.`polyweather$isRaining`() == true
 
     private val rainStrength: Float get() = if (PolyWeatherConfig.isIrlWeather) RealWeatherHandler.rainStrength else PolyWeatherConfig.rainStrength
     private val snowStrength: Float get() = if (PolyWeatherConfig.isIrlWeather) RealWeatherHandler.rainStrength else PolyWeatherConfig.snowStrength
