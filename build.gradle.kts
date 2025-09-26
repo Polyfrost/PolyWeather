@@ -20,7 +20,7 @@ toolkitMultiversion {
 
 toolkitLoomHelper {
     useOneConfig {
-        version = "1.0.0-alpha.151"
+        version = "1.0.0-alpha.153"
         loaderVersion = "1.1.0-alpha.49"
 
         usePolyMixin = true

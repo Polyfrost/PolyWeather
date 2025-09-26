@@ -7,11 +7,8 @@ enum class WeatherType {
     SNOW;
 
     companion object {
-
         fun from(idx: Int): WeatherType {
             return values()[idx]
         }
-
     }
-
 }

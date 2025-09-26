@@ -63,20 +63,20 @@ object RealWeatherHandler {
             return interpolate(currentCode.thunderStrength, nextCode.thunderStrength, currentTime)
         }
 
-    val isRaining: Boolean
+    val isRainy: Boolean
         get() = rainStrength > 0.05
 
-    val isThundering: Boolean
+    val isStormy: Boolean
         get() = thunderStrength > 0.05
 
-    val isSnowing: Boolean
+    val isSnowy: Boolean
         get() {
             val currentCode = currentCode ?: return false // Caches the value
             return currentCode.snow
         }
 
     fun initialize() {
-        if (!PolyWeatherConfig.irlWeather) {
+        if (!PolyWeatherConfig.isIrlWeather) {
             return
         }
 

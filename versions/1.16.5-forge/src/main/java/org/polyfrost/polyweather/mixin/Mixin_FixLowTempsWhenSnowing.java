@@ -2,7 +2,7 @@ package org.polyfrost.polyweather.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.renderer.LevelRenderer;
-import org.polyfrost.polyweather.client.PolyWeatherClient;
+import org.polyfrost.polyweather.client.ClientWeatherManager;
 import org.polyfrost.polyweather.client.PolyWeatherConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +17,7 @@ public class Mixin_FixLowTempsWhenSnowing {
             )
     )
     private float polyweather$updateTemperatures(float original) {
-        if (PolyWeatherConfig.INSTANCE.enabled && PolyWeatherClient.isSnowing()) {
+        if (PolyWeatherConfig.isEnabled() && ClientWeatherManager.isSnowy()) {
             return 0f;
         }
 
