@@ -113,7 +113,7 @@ object RealWeatherHandler {
     }
 
     private fun obtainLongitudeLatitude(): Pair<Double, Double>? {
-        val json = JsonUtils.parseFromUrl("http://ip-api.com/json/")?.asJsonObject
+        val json = JsonUtils.parseFromUrl("http://ip-api.com/json")?.asJsonObject
         if (json == null) {
             logger.error("Failed to obtain JSON from ip-api.com")
             return null

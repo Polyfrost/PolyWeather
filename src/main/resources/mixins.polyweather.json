@@ -5,9 +5,11 @@
     "refmap": "mixins.polyweather.refmap.json",
     "verbose": true,
     "client": [
-        "Mixin_FixLowTempsWhenSnowing",
-        "Mixin_FixRainAndThunderStrength",
-        "Mixin_ForceRainAndSnowParticles",
-        "Mixin_ForceRainAndThunderChecks"
+        "Mixin_AllowWeatherEverywhere",
+        "Mixin_CancelGroundParticles",
+        "Mixin_FixWorldColors",
+        "Mixin_ForceSnow",
+        "Mixin_ModifyPrecipitationStrength",
+        "Mixin_ModifyThunderStrength"
     ]
 }
