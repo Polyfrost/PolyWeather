@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 /*@Mixin(FogRenderer.class)
 *///?}
 public class Mixin_ModifyThunderStrength {
-    @Redirect(method = /*? if >=1.21.8 {*/ "getBaseColor" /*?} else {*/ /*"computeFogColor" *//*?}*/, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getThunderLevel(F)F"))
+    @Redirect(method = /*? if >=1.21.8 {*/ "getBaseColor" /*?} else if >=1.21.4 {*/ /*"computeFogColor" *//*?} else {*/ /*"setupColor" *//*?}*/, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getThunderLevel(F)F"))
     private static float modifyThunderStrength(ClientLevel instance, float delta) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getStormStrength(delta);
