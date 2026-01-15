@@ -1,4 +1,4 @@
-package org.polyfrost.polyweather.mixin;
+package org.polyfrost.polyweather.mixin.client;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import org.polyfrost.polyweather.client.ClientWeatherManager;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(ClientLevel.class)
 public class Mixin_FixWorldColors {
     @Redirect(method = "getSkyColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getRainLevel(F)F"))
-    private float polyweather$fixSkyColors(ClientLevel instance, float delta) {
+    private float fixSkyColors(ClientLevel instance, float delta) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getPrecipitationStrength(delta);
         }
@@ -19,7 +19,7 @@ public class Mixin_FixWorldColors {
     }
 
     @Redirect(method = "getSkyColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getThunderLevel(F)F"))
-    private float polyweather$fixSkyColorsThunder(ClientLevel instance, float delta) {
+    private float fixSkyColorsThunder(ClientLevel instance, float delta) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getStormStrength(delta);
         }
@@ -28,7 +28,7 @@ public class Mixin_FixWorldColors {
     }
 
     @Redirect(method = "getCloudColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getRainLevel(F)F"))
-    private float polyweather$fixCloudColors(ClientLevel instance, float delta) {
+    private float fixCloudColors(ClientLevel instance, float delta) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getPrecipitationStrength(delta);
         }
@@ -37,7 +37,7 @@ public class Mixin_FixWorldColors {
     }
 
     @Redirect(method = "getCloudColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getThunderLevel(F)F"))
-    private float polyweather$fixCloudColorsThunder(ClientLevel instance, float delta) {
+    private float fixCloudColorsThunder(ClientLevel instance, float delta) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getStormStrength(delta);
         }
