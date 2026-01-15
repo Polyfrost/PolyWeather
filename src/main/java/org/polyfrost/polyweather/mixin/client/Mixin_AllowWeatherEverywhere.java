@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(WeatherEffectRenderer.class)
 public class Mixin_AllowWeatherEverywhere {
     @Redirect(method = "tickRainParticles", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getRainLevel(F)F"))
-    private float polyweather$allowRainEverywhere(ClientLevel instance, float delta) {
+    private float allowRainEverywhere(ClientLevel instance, float delta) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getPrecipitationStrength(delta);
         }

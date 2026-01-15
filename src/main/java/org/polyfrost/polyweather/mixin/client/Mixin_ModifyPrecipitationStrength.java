@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(WeatherEffectRenderer.class)
 public class Mixin_ModifyPrecipitationStrength {
     @Redirect(method = /*? if >=1.21.10 {*/ "extractRenderState" /*?} else {*/ /*"render(Lnet/minecraft/world/level/Level;Lnet/minecraft/client/renderer/MultiBufferSource;IFLnet/minecraft/world/phys/Vec3;)V" *//*?}*/, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getRainLevel(F)F"))
-    private float polyweather$modifyPrecipitationStength(Level instance, float delta) {
+    private float modifyPrecipitationStength(Level instance, float delta) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getPrecipitationStrength(delta);
         }

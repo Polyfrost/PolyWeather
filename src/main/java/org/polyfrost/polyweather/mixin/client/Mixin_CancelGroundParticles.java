@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(WeatherEffectRenderer.class)
 public class Mixin_CancelGroundParticles {
     @Inject(method = "tickRainParticles", at = @At("HEAD"), cancellable = true)
-    private void polyweather$cancelGroundParticles(ClientLevel arg, Camera arg2, int m, ParticleStatus arg3, CallbackInfo ci) {
+    private void cancelGroundParticles(ClientLevel arg, Camera arg2, int m, ParticleStatus arg3, CallbackInfo ci) {
         if (PolyWeatherConfig.isEnabled() && (!ClientWeatherManager.isRainy() || ClientWeatherManager.isSnowy())) {
             ci.cancel();
         }
