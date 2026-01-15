@@ -1,4 +1,4 @@
-package org.polyfrost.polyweather.mixin;
+package org.polyfrost.polyweather.mixin.client;
 
 import net.minecraft.client.renderer.WeatherEffectRenderer;
 import net.minecraft.world.level.biome.Biome;

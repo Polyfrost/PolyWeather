@@ -1,4 +1,4 @@
-package org.polyfrost.polyweather.mixin;
+package org.polyfrost.polyweather.mixin.client;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import org.polyfrost.polyweather.client.ClientWeatherManager;
