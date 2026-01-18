@@ -3,7 +3,9 @@ package org.polyfrost.polyweather.mixin.client;
 //? if >=1.21.4 {
 import net.minecraft.client.renderer.WeatherEffectRenderer;
 //?} else {
-/*import net.minecraft.client.renderer.LevelRenderer;
+/*import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 *///?}
 import net.minecraft.world.level.biome.Biome;
@@ -16,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  //?} else {
 /*import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 *///?}
 
 //? if >=1.21.4 {
@@ -33,13 +34,13 @@ public class Mixin_ForceSnow {
         }
     }
     //?} else {
-    /*@Redirect(method = "renderSnowAndRain", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/biome/Biome;getPrecipitationAt(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/biome/Biome$Precipitation;"))
-    private Biome.Precipitation polyweather$forceSnow(Biome instance, BlockPos pos) {
+    /*@WrapOperation(method = "renderSnowAndRain", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/biome/Biome;getPrecipitationAt(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/biome/Biome$Precipitation;"))
+    private Biome.Precipitation polyweather$forceSnow(Biome instance, BlockPos pos, Operation<Biome.Precipitation> original) {
         if (PolyWeatherConfig.isEnabled() && ClientWeatherManager.isSnowy()) {
             return Biome.Precipitation.SNOW;
         }
 
-        return instance.getPrecipitationAt(pos);
+        return original.call(instance, pos);
     }
     *///?}
 }
