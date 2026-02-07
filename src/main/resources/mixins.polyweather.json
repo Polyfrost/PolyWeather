@@ -8,7 +8,6 @@
         "client.Mixin_AllowWeatherEverywhere",
         "client.Mixin_CancelGroundParticles",
 		"client.Mixin_FixWorldColors",
-        "client.Mixin_ForceSnow",
         "client.Mixin_ModifyPrecipitationStrength",
         "client.Mixin_ModifyThunderStrength"
     ]
