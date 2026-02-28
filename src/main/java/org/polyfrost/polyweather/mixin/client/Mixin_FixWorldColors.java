@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public /*? if >=1.21.11 {*/ interface /*?} else {*//* class *//*?}*/ Mixin_FixWorldColors {
     //? if >=1.21.11 {
     @ModifyReturnValue(method = "from", at = @At("RETURN"))
-    private static WeatherAttributes.WeatherAccess fixWeatherAccess(WeatherAttributes.WeatherAccess original) {
+    private static WeatherAttributes.WeatherAccess modifyWeather(WeatherAttributes.WeatherAccess original) {
         return new WeatherAttributes.WeatherAccess() {
             @Override
             public float rainLevel() {
@@ -37,8 +37,8 @@ public /*? if >=1.21.11 {*/ interface /*?} else {*//* class *//*?}*/ Mixin_FixWo
         };
     }
     //?} else {
-    /*@WrapOperation(method = "getSkyColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getRainLevel(F)F"))
-    private float fixSkyColors(ClientLevel instance, float delta, Operation<Float> original) {
+    /*@WrapOperation(method = {"getSkyColor", "getSkyDarken", "getCloudColor"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getRainLevel(F)F"))
+    private float modifyPrecipitationStrength(ClientLevel instance, float delta, Operation<Float> original) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getPrecipitationStrength(delta);
         }
@@ -46,26 +46,8 @@ public /*? if >=1.21.11 {*/ interface /*?} else {*//* class *//*?}*/ Mixin_FixWo
         return original.call(instance, delta);
     }
 
-    @WrapOperation(method = "getSkyColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getThunderLevel(F)F"))
-    private float fixSkyColorsThunder(ClientLevel instance, float delta, Operation<Float> original) {
-        if (PolyWeatherConfig.isEnabled()) {
-            return ClientWeatherManager.getStormStrength(delta);
-        }
-
-        return original.call(instance, delta);
-    }
-
-    @WrapOperation(method = "getCloudColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getRainLevel(F)F"))
-    private float fixCloudColors(ClientLevel instance, float delta, Operation<Float> original) {
-        if (PolyWeatherConfig.isEnabled()) {
-            return ClientWeatherManager.getPrecipitationStrength(delta);
-        }
-
-        return original.call(instance, delta);
-    }
-
-    @WrapOperation(method = "getCloudColor", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getThunderLevel(F)F"))
-    private float fixCloudColorsThunder(ClientLevel instance, float delta, Operation<Float> original) {
+    @WrapOperation(method = {"getSkyColor", "getSkyDarken", "getCloudColor"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getThunderLevel(F)F"))
+    private float modifyThunderStrength(ClientLevel instance, float delta, Operation<Float> original) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getStormStrength(delta);
         }
