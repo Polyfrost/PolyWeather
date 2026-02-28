@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 *///?}
 public class Mixin_CancelGroundParticles {
     @Inject(method = /*? if >=1.21.4 {*/ "tickRainParticles" /*?} else {*/ /*"tickRain" *//*?}*/, at = @At("HEAD"), cancellable = true)
-    private void cancelGroundParticles(/*? if >=1.21.4 {*/ ClientLevel arg, Camera arg2, int m, ParticleStatus arg3, /*?}*/ CallbackInfo ci) {
+    private void cancelGroundParticles(/*? if >=1.21.4 {*/ ClientLevel clientLevel, Camera camera, int m, ParticleStatus particleStatus, /*?}*/ /*? if >=1.21.11 {*/ int j, /*?}*/ CallbackInfo ci) {
         if (PolyWeatherConfig.isEnabled() && (!ClientWeatherManager.isRainy() || ClientWeatherManager.isSnowy())) {
             ci.cancel();
         }
