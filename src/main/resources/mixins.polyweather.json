@@ -1,5 +1,5 @@
 {
-    "compatibilityLevel": "JAVA_8",
+    "compatibilityLevel": "JAVA_21",
     "minVersion": "0.7",
     "package": "org.polyfrost.polyweather.mixin",
     "refmap": "mixins.polyweather.refmap.json",
@@ -7,9 +7,11 @@
     "client": [
         "client.Mixin_AllowWeatherEverywhere",
         "client.Mixin_CancelGroundParticles",
-		"client.Mixin_FixWorldColors",
-        "client.Mixin_ForceSnow",
+        "client.Mixin_FixWorldColors",
+        "client.Mixin_HideCelestialBodies",
+        "client.Mixin_ModifyFogColor",
         "client.Mixin_ModifyPrecipitationStrength",
-        "client.Mixin_ModifyThunderStrength"
+        "client.Mixin_ModifyThunderStrength",
+        "client.Mixin_ModifyWeatherFog"
     ]
 }
