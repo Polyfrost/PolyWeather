@@ -30,21 +30,27 @@ object PolyWeatherConfig : Config("${PolyWeatherConstants.ID}.json", "/assets/po
         category = "Weather"
     ) var isIrlWeather = false
 
+    @Switch(
+        title = "Enable Sounds",
+        description = "Play weather sounds matching the visual weather",
+        category = "Weather"
+    ) @JvmStatic var enableSounds = true
+
     @Slider(
         title = "Rain intensity",
-        min = 0f, max = 1f,
+        min = 0f, max = 1f, step = 0.1f,
         category = "Weather"
     ) var rainStrength = 1f
 
     @Slider(
         title = "Snow intensity",
-        min = 0f, max = 1f,
+        min = 0f, max = 1f, step = 0.1f,
         category = "Weather"
     ) var snowStrength = 1f
 
     @Slider(
         title = "Thunder intensity",
-        min = 0f, max = 1f,
+        min = 0f, max = 1f, step = 0.1f,
         category = "Weather"
     ) var thunderStrength = 1f
 
