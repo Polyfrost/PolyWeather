@@ -1,6 +1,5 @@
 package org.polyfrost.polyweather.client
 
-import dev.deftu.omnicore.api.math.OmniMath
 import org.polyfrost.polyweather.client.realtime.RealWeatherHandler
 import org.polyfrost.polyweather.util.WeatherType
 
@@ -24,7 +23,7 @@ object ClientWeatherManager {
             return 0f
         }
 
-        prevRainStrength = OmniMath.lerp(prevRainStrength, rainStrength, delta)
+        prevRainStrength = lerp(prevRainStrength, rainStrength, delta)
         return prevRainStrength
     }
 
@@ -35,7 +34,7 @@ object ClientWeatherManager {
             return 0f
         }
 
-        prevSnowStrength = OmniMath.lerp(prevSnowStrength, snowStrength, delta)
+        prevSnowStrength = lerp(prevSnowStrength, snowStrength, delta)
         return prevSnowStrength
     }
 
@@ -55,7 +54,11 @@ object ClientWeatherManager {
             return 0f
         }
 
-        prevStormStrength = OmniMath.lerp(prevStormStrength, stormStrength, delta)
+        prevStormStrength = lerp(prevStormStrength, stormStrength, delta)
         return prevStormStrength
+    }
+
+    private fun lerp(a: Float, b: Float, delta: Float): Float {
+        return a + (b - a) * delta
     }
 }

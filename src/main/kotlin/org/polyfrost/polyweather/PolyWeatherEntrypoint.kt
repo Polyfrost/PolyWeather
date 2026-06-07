@@ -4,8 +4,8 @@ import net.fabricmc.api.ClientModInitializer
 import org.polyfrost.polyweather.client.PolyWeatherClient
 
 class PolyWeatherEntrypoint : ClientModInitializer {
-    override
-    fun onInitializeClient() {
+
+    override fun onInitializeClient() {
         PolyWeatherClient.initialize()
     }
 }

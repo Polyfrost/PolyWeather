@@ -12,6 +12,7 @@
         "client.Mixin_ModifyFogColor",
         "client.Mixin_ModifyPrecipitationStrength",
         "client.Mixin_ModifyThunderStrength",
-        "client.Mixin_ModifyWeatherFog"
+        "client.Mixin_ModifyWeatherFog",
+        "client.Mixin_WeatherSound"
     ]
 }
