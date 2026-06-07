@@ -128,28 +128,31 @@ fun <T> optionalProp(property: String, block: (String) -> T?): T? =
 val modrinthId = findProperty("publish.modrinth")?.toString()?.takeIf { it.isNotBlank() }
 
 // make sure modrinth.token is set in your user gradle properties
-// I commented this out because it was preventing my gradle from working, sorry. It'll have to be fixed by someone that knows how modrinth publishing works, or someone who magically works on their machine.
-//publishMods {
-//    file = project.tasks.remapJar.get().archiveFile
-//
-//    displayName = modversion.toString()
-//    version = "v$modversion"
-//    changelog =
-//        project.rootProject.file("CHANGELOG.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
-//    type = ALPHA
-//
-//    modLoaders.add("fabric")
-//
-//    dryRun = modrinthId == null
-//
-//    if (modrinthId != null) {
-//        modrinth {
-//            projectId = property("publish.modrinth").toString()
-//            accessToken = findProperty("modrinth.token").toString()
-//
-//            minecraftVersions.add(mcversion)
-//
-//            requires("oneconfig")
-//        }
-//    }
-//}
+publishMods {
+    file = if (stonecutter.current.parsed >= "26.1") {
+        project.tasks.jar.get().archiveFile
+    } else {
+        project.tasks.named<org.gradle.api.tasks.bundling.AbstractArchiveTask>("remapJar").flatMap { it.archiveFile }
+    }
+
+    displayName = modversion.toString()
+    version = "v$modversion"
+    changelog =
+        project.rootProject.file("CHANGELOG.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
+    type = ALPHA
+
+    modLoaders.add("fabric")
+
+    dryRun = modrinthId == null
+
+    if (modrinthId != null) {
+        modrinth {
+            projectId = property("publish.modrinth").toString()
+            accessToken = findProperty("modrinth.token").toString()
+
+            minecraftVersions.add(mcversion)
+
+            requires("oneconfig")
+        }
+    }
+}
