@@ -13,6 +13,8 @@ val modname = property("mod.name")
 val modversion = property("mod.version")
 val mcversion = stonecutter.current.version
 val oneconfigversion = property("oneconfig_version")
+val versionrange = property("minecraft_version_range")
+val loaderversion = property("loader_version")
 
 version = "$modversion+$mcversion"
 base.archivesName = modname.toString()
@@ -83,8 +85,8 @@ tasks.processResources {
         "mod_id" to modid,
         "mod_name" to modname,
         "mod_version" to modversion,
-        "mc_version" to mcversion,
-        "loader_version" to providers.gradleProperty("loader_version").get()
+        "minecraft_version_range" to versionrange,
+        "loader_version" to loaderversion
     )
 
     inputs.properties(props)
@@ -125,34 +127,57 @@ tasks.jar {
 fun <T> optionalProp(property: String, block: (String) -> T?): T? =
     findProperty(property)?.toString()?.takeUnless { it.isBlank() }?.let(block)
 
-val modrinthId = findProperty("publish.modrinth")?.toString()?.takeIf { it.isNotBlank() }
+val modrinthMinecraftVersionOverride = mapOf(
+    "26.1" to listOf("26.1", "26.1.1", "26.1.2"),
+    "26.1.1" to listOf("26.1", "26.1.1", "26.1.2"),
+    "26.1.2" to listOf("26.1", "26.1.1", "26.1.2")
+)
 
-// make sure modrinth.token is set in your user gradle properties
-publishMods {
-    file = if (stonecutter.current.parsed >= "26.1") {
-        project.tasks.jar.get().archiveFile
-    } else {
-        project.tasks.named<org.gradle.api.tasks.bundling.AbstractArchiveTask>("remapJar").flatMap { it.archiveFile }
+val modrinthId = listOf("oneconfig.publish.modrinth", "publish.modrinth").firstNotNullOfOrNull { findProperty(it) }?.toString()?.takeIf { it.isNotBlank() }
+val modrinthToken = listOf("oneconfig.publish.modrinth.token", "publish.modrinth.token", "modrinth.token").firstNotNullOfOrNull { findProperty(it) }?.toString()?.takeIf { it.isNotBlank() }
+val minecraftVersion = modrinthMinecraftVersionOverride[mcversion] ?: listOf(mcversion)
+val publishJarTaskName = if ("remapJar" in tasks.names) "remapJar" else "jar"
+val changelogs = rootProject.file("CHANGELOG.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
+
+val validateChangelog by tasks.registering {
+    description = "Validates that the changelog is written for the current version."
+    if (!changelogs.contains(modversion.toString())) {
+        throw GradleException("Changelog for version $modversion not found.")
     }
+}
+
+tasks.publishMods.configure {
+    dependsOn(validateChangelog)
+}
+tasks.matching { it.name == "publishModrinth" }.configureEach {
+    dependsOn(validateChangelog)
+}
+
+publishMods {
+    file = tasks.named<AbstractArchiveTask>(publishJarTaskName).flatMap { it.archiveFile }
 
     displayName = modversion.toString()
     version = "v$modversion"
-    changelog =
-        project.rootProject.file("CHANGELOG.md").takeIf { it.exists() }?.readText() ?: "No changelog provided."
-    type = ALPHA
+    changelog = changelogs
+    type = BETA
 
     modLoaders.add("fabric")
 
-    dryRun = modrinthId == null
+    dryRun = modrinthId == null || modrinthToken == null
 
     if (modrinthId != null) {
         modrinth {
-            projectId = property("publish.modrinth").toString()
-            accessToken = findProperty("modrinth.token").toString()
+            projectId = modrinthId
+            accessToken = modrinthToken.orEmpty()
 
-            minecraftVersions.add(mcversion)
+            minecraftVersions.addAll(minecraftVersion)
 
             requires("oneconfig")
+            requires("fabric-language-kotlin")
+            findProperty("publish.modrinth.compose-bundle")
+                ?.toString()
+                ?.takeIf { it.isNotBlank() }
+                ?.let { requires(it) }
         }
     }
 }
