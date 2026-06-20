@@ -24,5 +24,10 @@
     "mixins.${mod_id}.json"
   ],
   "license": "GPL 3.0",
-  "environment": "client"
+  "environment": "client",
+  "depends": {
+    "minecraft": "${minecraft_version_range}",
+    "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": "*"
+  }
 }
