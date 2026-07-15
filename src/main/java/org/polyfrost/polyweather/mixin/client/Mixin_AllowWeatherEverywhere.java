@@ -1,9 +1,12 @@
 package org.polyfrost.polyweather.mixin.client;
 
-//? if >=1.21.4 {
+//? if >=26.2 {
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.client.multiplayer.ClientLevel;
+//?} else if >=1.21.4 {
+/*import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.renderer.WeatherEffectRenderer;
-//?} else {
+*///?} else {
 /*import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -15,9 +18,11 @@ import org.polyfrost.polyweather.client.PolyWeatherConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-//? if >=1.21.4 {
-@Mixin(WeatherEffectRenderer.class)
-//?} else {
+//? if >=26.2 {
+@Mixin(ClientLevel.class)
+//?} else if >=1.21.4 {
+/*@Mixin(WeatherEffectRenderer.class)
+*///?} else {
 /*@Mixin(LevelRenderer.class)
 *///?}
 public class Mixin_AllowWeatherEverywhere {
