@@ -24,11 +24,12 @@ repositories {
     maven("https://repo.polyfrost.org/releases")
     maven("https://repo.polyfrost.org/snapshots")
     maven("https://maven.gegy.dev/releases")
-    maven("https://maven.logix.dev/snapshots")
     maven("https://nexus.prsm.wtf/repository/maven-public/maven-repo/releases/")
     maven("https://repo.hypixel.net/repository/Hypixel/")
     maven("https://maven.deftu.dev/releases")
     maven("https://maven.fabricmc.net/releases")
+    maven("https://maven.terraformersmc.com/releases") { content { includeGroup("com.terraformersmc") } }
+    maven("https://central.sonatype.com/repository/maven-snapshots/") { content { includeGroup("net.kyori") } }
     maven("https://jitpack.io") { content { includeGroupAndSubgroups("com.github") } }
     maven("https://maven.bawnorton.com/releases") { content { includeGroup("com.github.bawnorton.mixinsquared") } }
     maven("https://maven.azureaaron.net/releases") { content { includeGroup("net.azureaaron") } }
@@ -55,10 +56,10 @@ dependencies {
         @Suppress("UnstableApiUsage")
         mappings(loom.layered {
             officialMojangMappings()
-            optionalProp("${property("parchment_version")}") {
+            optionalProp("parchment_version") {
                 parchment("org.parchmentmc.data:parchment-${property("minecraft_version")}:$it@zip")
             }
-            optionalProp("${property("yalmm_version")}") {
+            optionalProp("yalmm_version") {
                 mappings("dev.lambdaurora:yalmm-mojbackward:${property("minecraft_version")}+build.$it")
             }
         })
