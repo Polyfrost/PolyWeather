@@ -3,6 +3,7 @@ package org.polyfrost.polyweather.mixin.client;
 //? if >=1.21.11 {
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.attribute.WeatherAttributes;
+import net.minecraft.world.level.Level;
 //?} else {
 /*import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -21,7 +22,8 @@ import org.spongepowered.asm.mixin.injection.At;
 public /*? if >=1.21.11 {*/ interface /*?} else {*//* class *//*?}*/ Mixin_FixWorldColors {
     //? if >=1.21.11 {
     @ModifyReturnValue(method = "from", at = @At("RETURN"))
-    private static WeatherAttributes.WeatherAccess modifyWeather(WeatherAttributes.WeatherAccess original) {
+    private static WeatherAttributes.WeatherAccess modifyWeather(WeatherAttributes.WeatherAccess original, Level level) {
+        if (!level.isClientSide()) return original;
         return new WeatherAttributes.WeatherAccess() {
             @Override
             public float rainLevel() {
