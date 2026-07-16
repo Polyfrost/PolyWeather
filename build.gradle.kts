@@ -178,7 +178,7 @@ publishMods {
     displayName = modversion.toString()
     version = "v$modversion"
     changelog = changelogs
-    type = BETA
+    type = STABLE
 
     modLoaders.add("fabric")
 
