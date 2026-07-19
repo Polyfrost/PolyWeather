@@ -14,7 +14,7 @@ object PolyWeatherConfig : Config("${PolyWeatherConstants.ID}.json", "/assets/po
         title = "Enable PolyWeather",
         description = "Master switch to enable/disable the mod",
         category = "Weather"
-    ) @JvmStatic var isEnabled = true
+    ) @JvmStatic var isEnabled = false
 
     @Dropdown(
         title = "Weather",
