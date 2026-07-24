@@ -1,9 +1,13 @@
 {
     "compatibilityLevel": "JAVA_21",
     "minVersion": "0.7",
+    "required": true,
     "package": "org.polyfrost.polyweather.mixin",
     "refmap": "mixins.polyweather.refmap.json",
     "verbose": true,
+    "injectors": {
+        "defaultRequire": 1
+    },
     "client": [
         "client.Mixin_AllowWeatherEverywhere",
         "client.Mixin_CancelGroundParticles",
