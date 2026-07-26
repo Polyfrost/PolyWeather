@@ -1,2 +1,3 @@
-## 1.2.2
-- Fixed a generally harmless invalid mixin on 1.21.1–1.21.5 and 1.21.11–26.2.
+## 1.2.3
+- Fixed the game crashing on launch if you live in a timezone with a fractional UTC offset (e.g. UTC+05:30)
+- Fixed some invalid API responses causing the game to crash
