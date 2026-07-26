@@ -1,29 +1,20 @@
 package org.polyfrost.polyweather
 
+import java.time.Duration
 import java.time.Instant
-import java.util.Calendar
+import java.time.temporal.ChronoUnit
 
 val currentHour: Instant
-    get() {
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        return calendar.toInstant()
-    }
+    get() = Instant.now().truncatedTo(ChronoUnit.HOURS)
 
 val nextHour: Instant
-    get() {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.HOUR, 1)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        return calendar.toInstant()
-    }
+    get() = currentHour.plus(1, ChronoUnit.HOURS)
 
 val currentTime: Float
-    get() = Calendar.getInstance().get(Calendar.MINUTE) / 60f + Calendar.getInstance().get(Calendar.SECOND) / 3600f + Calendar.getInstance().get(Calendar.MILLISECOND) / 3600000f
+    get() {
+        val now = Instant.now()
+        return Duration.between(now.truncatedTo(ChronoUnit.HOURS), now).toMillis() / 3600000f
+    }
 
 fun interpolate(f1: Float, f2: Float, t: Float): Float {
     return f1 * (1 - t) + f2 * t

@@ -1,5 +1,7 @@
 package org.polyfrost.polyweather.client.realtime
 
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
 import org.apache.logging.log4j.LogManager
 import org.polyfrost.oneconfig.api.event.v1.eventHandler
 import org.polyfrost.oneconfig.api.event.v1.events.TickEvent
@@ -12,42 +14,34 @@ import org.polyfrost.polyweather.interpolate
 import org.polyfrost.polyweather.nextHour
 import org.polyfrost.polyweather.util.WMOCode
 import java.time.Instant
-import java.util.Calendar
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicBoolean
 
 object RealWeatherHandler {
     private val logger = LogManager.getLogger(RealWeatherHandler::class.java)
 
-    private val data = mutableMapOf<Instant, WMOCode>()
+    private const val MIN_RETRY_SECONDS = 60L
+    private const val MAX_RETRY_SECONDS = 900L
 
+    private val data = ConcurrentHashMap<Instant, WMOCode>()
+
+    // The forecast is only ever fetched off-thread, so guard against two populates overlapping.
+    private val populating = AtomicBoolean()
+
+    @Volatile
+    private var retryAfter = Instant.MIN
+
+    @Volatile
+    private var retryDelaySeconds = MIN_RETRY_SECONDS
+
+    // These are read from the render thread, so they only ever look at the already-fetched forecast.
     val currentCode: WMOCode?
-        get() {
-            val currentHour = currentHour // Caches the value
-            if (!data.containsKey(currentHour)) {
-                populate() // Populates synchronously so that we wait until the data is populated
-
-                // If the data is still not present, return null
-                if (!data.containsKey(currentHour)) {
-                    return null
-                }
-            }
-
-            return data[currentHour]
-        }
+        get() = data[currentHour]
 
     val nextCode: WMOCode?
-        get() {
-            val nextHour = nextHour // Caches the value
-            if (!data.containsKey(nextHour)) {
-                populate() // Populates synchronously so that we wait until the data is populated
-
-                // If the data is still not present, return null
-                if (!data.containsKey(nextHour)) {
-                    return null
-                }
-            }
-
-            return data[nextHour]
-        }
+        get() = data[nextHour]
 
     val rainStrength: Float
         get() {
@@ -91,7 +85,7 @@ object RealWeatherHandler {
 
             // Checks if the next hour is within the forecast data map,
             // and re-populates the data if it is not.
-            if (!data.containsKey(Instant.now().plusSeconds(3600))) {
+            if (!data.containsKey(nextHour)) {
                 runAsync {
                     populate()
                 }
@@ -105,15 +99,59 @@ object RealWeatherHandler {
     }
 
     private fun populate() {
-        val longitudeLatitude = obtainLongitudeLatitude() ?: return
-        val (longitude, latitude) = longitudeLatitude
+        if (Instant.now().isBefore(retryAfter)) {
+            return
+        }
 
-        val weatherCodes = obtainHourlyWeatherCodes(longitude, latitude)
-        data.putAll(weatherCodes)
+        if (!populating.compareAndSet(false, true)) {
+            return
+        }
+
+        try {
+            val longitudeLatitude = obtainLongitudeLatitude()
+            if (longitudeLatitude == null) {
+                backOff()
+                return
+            }
+
+            val (longitude, latitude) = longitudeLatitude
+
+            val weatherCodes = obtainHourlyWeatherCodes(longitude, latitude)
+            if (weatherCodes.isEmpty()) {
+                backOff()
+                return
+            }
+
+            data.putAll(weatherCodes)
+            retryDelaySeconds = MIN_RETRY_SECONDS
+        } finally {
+            populating.set(false)
+        }
+    }
+
+    /**
+     * Delays the next attempt so that a failing or rate-limiting endpoint isn't retried every minute.
+     */
+    private fun backOff() {
+        retryAfter = Instant.now().plusSeconds(retryDelaySeconds)
+        logger.warn("Failed to populate the weather forecast, retrying in {} seconds", retryDelaySeconds)
+        retryDelaySeconds = (retryDelaySeconds * 2).coerceAtMost(MAX_RETRY_SECONDS)
+    }
+
+    /**
+     * Fetches and parses JSON, returning `null` for anything that isn't a usable response.
+     */
+    private fun fetchJson(url: String): JsonElement? {
+        return try {
+            JsonUtils.parseFromUrl(url)
+        } catch (e: Exception) {
+            logger.error("Failed to fetch JSON from {}", url, e)
+            null
+        }
     }
 
     private fun obtainLongitudeLatitude(): Pair<Double, Double>? {
-        val json = JsonUtils.parseFromUrl("http://ip-api.com/json")?.asJsonObject
+        val json = fetchJson("http://ip-api.com/json") as? JsonObject
         if (json == null) {
             logger.error("Failed to obtain JSON from ip-api.com")
             return null
@@ -135,21 +173,31 @@ object RealWeatherHandler {
     }
 
     private fun obtainHourlyWeatherCodes(longitude: Double, latitude: Double): Map<Instant, WMOCode> {
-        val json = JsonUtils.parseFromUrl("https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&hourly=weathercode&timezone=${Calendar.getInstance().timeZone.id}")?.asJsonObject
+        // The forecast is requested in UTC so that its timestamps line up with the instants used to look them up.
+        val json = fetchJson("https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&hourly=weathercode&timezone=UTC") as? JsonObject
         if (json == null) {
             logger.error("Failed to obtain JSON from open-meteo.com")
             return emptyMap()
         }
 
         val hourly = json.getAsJsonObject("hourly")
-        val time = hourly.getAsJsonArray("time")
-        val weatherCode = hourly.getAsJsonArray("weathercode")
+        val time = hourly?.getAsJsonArray("time")
+        val weatherCode = hourly?.getAsJsonArray("weathercode")
+        if (time == null || weatherCode == null || time.size() != weatherCode.size()) {
+            logger.error("open-meteo.com did not return an hourly forecast")
+            return emptyMap()
+        }
 
         val weatherCodes = mutableMapOf<Instant, WMOCode>()
-        for (i in 0 until time.size()) {
-            val value = time.get(i).asString
-            val code = WMOCode.fromCode(weatherCode.get(i).asInt)
-            weatherCodes[Instant.parse("$value:00Z")] = code
+        try {
+            for (i in 0 until time.size()) {
+                val value = time.get(i).asString
+                val code = WMOCode.fromCode(weatherCode.get(i).asInt)
+                weatherCodes[LocalDateTime.parse(value).toInstant(ZoneOffset.UTC)] = code
+            }
+        } catch (e: Exception) {
+            logger.error("Failed to parse the hourly forecast from open-meteo.com", e)
+            return emptyMap()
         }
 
         return weatherCodes
