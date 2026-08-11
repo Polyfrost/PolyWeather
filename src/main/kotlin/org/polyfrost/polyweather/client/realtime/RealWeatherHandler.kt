@@ -27,7 +27,7 @@ object RealWeatherHandler {
 
     private val data = ConcurrentHashMap<Instant, WMOCode>()
 
-    // The forecast is only ever fetched off-thread, so guard against two populates overlapping.
+    // Stops two off-thread populates from overlapping
     private val populating = AtomicBoolean()
 
     @Volatile
@@ -36,7 +36,6 @@ object RealWeatherHandler {
     @Volatile
     private var retryDelaySeconds = MIN_RETRY_SECONDS
 
-    // These are read from the render thread, so they only ever look at the already-fetched forecast.
     val currentCode: WMOCode?
         get() = data[currentHour]
 
@@ -45,15 +44,15 @@ object RealWeatherHandler {
 
     val rainStrength: Float
         get() {
-            val currentCode = currentCode ?: return 0f // Caches the value
-            val nextCode = nextCode ?: return 0f // Caches the value
+            val currentCode = currentCode ?: return 0f
+            val nextCode = nextCode ?: return 0f
             return interpolate(currentCode.rainStrength, nextCode.rainStrength, currentTime)
         }
 
     val thunderStrength: Float
         get() {
-            val currentCode = currentCode ?: return 0f // Caches the value
-            val nextCode = nextCode ?: return 0f // Caches the value
+            val currentCode = currentCode ?: return 0f
+            val nextCode = nextCode ?: return 0f
             return interpolate(currentCode.thunderStrength, nextCode.thunderStrength, currentTime)
         }
 
@@ -65,7 +64,7 @@ object RealWeatherHandler {
 
     val isSnowy: Boolean
         get() {
-            val currentCode = currentCode ?: return false // Caches the value
+            val currentCode = currentCode ?: return false
             return currentCode.snow
         }
 
@@ -76,15 +75,11 @@ object RealWeatherHandler {
 
         var tickCount = 0
         eventHandler<TickEvent.Start> {
-            // Only re-run the following code every 1200 ticks (1 minute)
-            // We don't need this check to be done as often as the tick event is called
-            // Technically it's not that computationally expensive, but it's free performance that we can save for our end user.
+            // Only check once every 1200 ticks (1 minute)
             if (tickCount++ % 1200 != 0) {
                 return@eventHandler
             }
 
-            // Checks if the next hour is within the forecast data map,
-            // and re-populates the data if it is not.
             if (!data.containsKey(nextHour)) {
                 runAsync {
                     populate()
@@ -92,7 +87,6 @@ object RealWeatherHandler {
             }
         }.register()
 
-        // Asynchronously populate the forecast map at startup.
         runAsync {
             populate()
         }
@@ -129,18 +123,12 @@ object RealWeatherHandler {
         }
     }
 
-    /**
-     * Delays the next attempt so that a failing or rate-limiting endpoint isn't retried every minute.
-     */
     private fun backOff() {
         retryAfter = Instant.now().plusSeconds(retryDelaySeconds)
         logger.warn("Failed to populate the weather forecast, retrying in {} seconds", retryDelaySeconds)
         retryDelaySeconds = (retryDelaySeconds * 2).coerceAtMost(MAX_RETRY_SECONDS)
     }
 
-    /**
-     * Fetches and parses JSON, returning `null` for anything that isn't a usable response.
-     */
     private fun fetchJson(url: String): JsonElement? {
         return try {
             JsonUtils.parseFromUrl(url)
@@ -173,7 +161,7 @@ object RealWeatherHandler {
     }
 
     private fun obtainHourlyWeatherCodes(longitude: Double, latitude: Double): Map<Instant, WMOCode> {
-        // The forecast is requested in UTC so that its timestamps line up with the instants used to look them up.
+        // UTC so the returned timestamps match the instants used to look them up
         val json = fetchJson("https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&hourly=weathercode&timezone=UTC") as? JsonObject
         if (json == null) {
             logger.error("Failed to obtain JSON from open-meteo.com")
