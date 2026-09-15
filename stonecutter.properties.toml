@@ -4,7 +4,7 @@ mod.group = "org.polyfrost"
 mod.version = "1.2.3"
 
 deps.fabric_loader = "0.19.3"
-deps.oneconfig = "1.0.7"
+deps.oneconfig = "1.2.0"
 deps.junit = "6.1.2"
 
 loomx.loom_version = "1.17-SNAPSHOT"
@@ -42,3 +42,7 @@ mod.mc_releases = ["26.1", "26.1.1", "26.1.2"]
 ["26.2"]
 mod.mc_compat = "~26.2"
 mod.mc_releases = ["26.2"]
+
+["26.3"]
+mod.mc_compat = "~26.3"
+mod.mc_releases = ["26.3"]
