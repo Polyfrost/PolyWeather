@@ -1,0 +1,11 @@
+tiny	2	0	intermediary	named
+c	net/minecraft/unmapped/C_24384787	net/minecraft/client/renderer/LevelRenderer
+c	net/minecraft/unmapped/C_28105876	net/minecraft/world/level/biome/Biome
+	m	()Z	m_07177229	hasPrecipitation
+c	net/minecraft/unmapped/C_32220415	net/minecraft/server/Bootstrap
+	m	()V	m_84022598	bootStrap
+c	net/minecraft/unmapped/C_34399650	net/minecraft/client/multiplayer/ClientLevel
+c	net/minecraft/unmapped/C_64041439	net/minecraft/world/level/Level
+	m	(F)F	m_31573274	getSkyDarken
+	m	(F)F	m_77661568	getRainLevel
+	m	(F)F	m_10970845	getThunderLevel

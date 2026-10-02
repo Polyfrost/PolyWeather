@@ -6,11 +6,16 @@ import net.minecraft.client.multiplayer.ClientLevel;
 //?} else if >=1.21.4 {
 /*import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.renderer.WeatherEffectRenderer;
-*///?} else {
+*///?} elif >1.8.9 {
 /*import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
+*///?} else {
+/*import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.client.render.GameRenderer;
+import net.minecraft.world.biome.source.BiomeSource;
 *///?}
 import net.minecraft.world.level.biome.Biome;
 import org.polyfrost.polyweather.client.ClientWeatherManager;
@@ -22,10 +27,12 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ClientLevel.class)
 //?} else if >=1.21.4 {
 /*@Mixin(WeatherEffectRenderer.class)
-*///?} else {
+*///?} elif >1.8.9 {
 /*@Mixin(LevelRenderer.class)
-*///?}
+*///?} else
+//@Mixin(GameRenderer.class)
 public class Mixin_AllowWeatherEverywhere {
+    //? if >1.8.9 {
     //? if >=1.21.4 {
     @ModifyReturnValue(method = "getPrecipitationAt", at = @At("RETURN"))
     //?} else {
@@ -45,6 +52,7 @@ public class Mixin_AllowWeatherEverywhere {
 
         return original/*? if <1.21.4 {*//*.call(instance, pos) *//*?}*/;
     }
+    //?}
 
     //? if <1.21.4 {
     /*@WrapOperation(method = "renderSnowAndRain", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/biome/Biome;hasPrecipitation()Z"))
@@ -54,6 +62,17 @@ public class Mixin_AllowWeatherEverywhere {
         }
 
         return original.call(instance);
+    }
+    *///?}
+
+    //? if =1.8.9 {
+    /*@WrapOperation(method = "renderSnowAndRain", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/source/BiomeSource;adjustTemperatureForHeight(FI)F"))
+    private float changeWeather(BiomeSource instance, float temperature, int height, Operation<Float> original) {
+        if (PolyWeatherConfig.isEnabled()) {
+            return ClientWeatherManager.isSnowy() ? 0.0F : 0.15F;
+        }
+
+        return original.call(instance, temperature, height);
     }
     *///?}
 }
