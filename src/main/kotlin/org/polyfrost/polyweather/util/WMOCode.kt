@@ -24,8 +24,8 @@ enum class WMOCode(val code: Int, val rainStrength: Float = 0f, val snow: Boolea
     RAIN_SHOWER_SLIGHT(80, 0.25f),
     RAIN_SHOWER_MODERATE(81, 0.6f),
     RAIN_SHOWER_VIOLENT(82, 1f),
-    SNOW_SHOWER_SLIGHT(85, 0.25f),
-    SNOW_SHOWER_HEAVY(86, 1f),
+    SNOW_SHOWER_SLIGHT(85, 0.25f, true),
+    SNOW_SHOWER_HEAVY(86, 1f, true),
     THUNDERSTORM(95, 0.6f, 0.6f),
     SLIGHT_HAIL_THUNDERSTORM(96, 0.6f, 0.25f),
     HEAVY_HAIL_THUNDERSTORM(99, 1f, 1f);

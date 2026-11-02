@@ -9,6 +9,7 @@
     },
     "client": [
         "client.Mixin_AllowWeatherEverywhere",
+        "client.Mixin_ArgentumWeather",
         "client.Mixin_CancelGroundParticles",
         "client.Mixin_FixWorldColors",
         "client.Mixin_HideCelestialBodies",
