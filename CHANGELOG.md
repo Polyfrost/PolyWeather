@@ -1,2 +1,2 @@
-## 1.3.0
-- Added support for Minecraft 26.3
+## 1.3.1
+- Fixed snow not always being snow on 1.8.9 when paired with Argentum
