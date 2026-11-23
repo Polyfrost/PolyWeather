@@ -3,8 +3,8 @@ package org.polyfrost.polyweather.mixin.client;
 //? if =1.8.9 {
 /*import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.source.BiomeSource;
-import net.minecraft.world.level.biome.Biome;
 import org.polyfrost.polyweather.client.ClientWeatherManager;
 import org.polyfrost.polyweather.client.PolyWeatherConfig;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Pseudo;
 @Mixin(targets = "dev.rdh.argentum.impl.render.environment.WeatherRenderer")
 public class Mixin_ArgentumWeather {
     //? if =1.8.9 {
-    /*@WrapOperation(method = "rebuild", remap = false, require = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/biome/Biome;hasPrecipitation()Z", remap = true))
+    /*@WrapOperation(method = "rebuild", remap = false, require = 0, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/biome/Biome;isRainy()Z", remap = true))
     private boolean allowWeatherEverywhere(Biome instance, Operation<Boolean> original) {
         if (PolyWeatherConfig.isEnabled()) {
             return true;

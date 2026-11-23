@@ -1,10 +1,11 @@
 package org.polyfrost.polyweather.test
 
-//? if > 1.8.9
+//? if > 1.8.9 {
 import net.minecraft.SharedConstants
 import net.minecraft.server.Bootstrap
-//? if = 1.8.9 {
+//?} else {
 /*import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.Bootstrap
 import net.ornithemc.osl.entrypoints.api.ModInitializer
 *///?}
 import org.junit.jupiter.api.Assertions
@@ -26,14 +27,15 @@ class MixinTest {
         fun setupEnvironment() {
             //? if > 1.8.9 {
             SharedConstants.tryDetectVersion()
+            Bootstrap.bootStrap()
             //?} else {
             /*FabricLoader.getInstance().invokeEntrypoints(
                 ModInitializer.ENTRYPOINT_KEY,
                 ModInitializer::class.java,
                 ModInitializer::init,
             )
+            Bootstrap.init()
             *///?}
-            Bootstrap.bootStrap()
         }
     }
 

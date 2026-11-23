@@ -55,7 +55,8 @@ public class Mixin_AllowWeatherEverywhere {
     //?}
 
     //? if <1.21.4 {
-    /*@WrapOperation(method = "renderSnowAndRain", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/biome/Biome;hasPrecipitation()Z"))
+    /*//~ if = 1.8.9 'hasPrecipitation' -> 'isRainy'
+    @WrapOperation(method = "renderSnowAndRain", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/biome/Biome;hasPrecipitation()Z"))
     private boolean allowWeatherEverywhere(Biome instance, Operation<Boolean> original) {
         if (PolyWeatherConfig.isEnabled()) {
             return true;

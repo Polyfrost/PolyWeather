@@ -62,7 +62,7 @@ public /*? if >=1.21.11 {*/ interface /*?} else {*//* class *//*?}*/ Mixin_FixWo
         return original.call(instance, delta);
     }
     *///?} else {
-    /*@WrapOperation(method = {"getSkyColor", "getSkyDarken", "getCloudColor"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getRainLevel(F)F"))
+    /*@WrapOperation(method = {"getSkyColor", "calculateAmbientLight", "getCloudColor"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getRainLevel(F)F"))
     private float modifyPrecipitationStrength(Level instance, float delta, Operation<Float> original) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getPrecipitationStrength(delta);
@@ -71,7 +71,7 @@ public /*? if >=1.21.11 {*/ interface /*?} else {*//* class *//*?}*/ Mixin_FixWo
         return original.call(instance, delta);
     }
 
-    @WrapOperation(method = {"getSkyColor", "getSkyDarken", "getCloudColor"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getThunderLevel(F)F"))
+    @WrapOperation(method = {"getSkyColor", "calculateAmbientLight", "getCloudColor"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getThunderLevel(F)F"))
     private float modifyThunderStrength(Level instance, float delta, Operation<Float> original) {
         if (PolyWeatherConfig.isEnabled()) {
             return ClientWeatherManager.getStormStrength(delta);
